@@ -44,6 +44,7 @@ const displayUsers=(users)=>{
             // Store selected receiver
              localStorage.setItem("selectedUserId", user.id);
               localStorage.setItem("selectedUserName", user.name);
+               localStorage.setItem("selectedUserEmail", user.email);
 
             window.location.href = "chatwindow.html";
 

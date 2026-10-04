@@ -14,6 +14,7 @@ document.getElementById('loginForm').addEventListener('submit',async(e)=>{
         localStorage.setItem('token', response.data.token);
         console.log("LOGIN RESPONSE:", response.data);
         localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("loggedUserEmail", response.data.email);
          window.location.href="users.html";
 
     }catch(err){

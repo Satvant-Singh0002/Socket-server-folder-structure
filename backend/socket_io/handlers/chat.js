@@ -4,18 +4,19 @@ module.exports=(socket,io)=>{
     // Register user
     // ==============================
 
-    socket.on("register", (userId) => {
+    socket.on("join_room", (roomId) => {
 
-        socket.join(`user_${userId}`);
+        socket.join(roomId);
 
         console.log(
-            `User ${userId} joined room user_${userId}`
+            `User ${socket.userId} joined room ${roomId}`
         );
 
     });
     // receiving message from the client
 socket.on("message",(data)=>{
     const {
+        roomId,
         senderId,
         receiverId,
         text
@@ -23,7 +24,7 @@ socket.on("message",(data)=>{
     console.log("Received message:",data);
 
     // sending message to the receiver
-io.to(`user_${receiverId}`).emit(
+io.to(roomId).emit(
     "message",
     text
 );

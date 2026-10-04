@@ -11,11 +11,23 @@ const selectedUserId = localStorage.getItem("selectedUserId");
 
 const selectedUserName = localStorage.getItem("selectedUserName");
 
+const selectedUserEmail = localStorage.getItem("selectedUserEmail");
+console.log("Selected User Email:", selectedUserEmail);
+
+const loggedUserEmail = localStorage.getItem("loggedUserEmail");
+console.log("Logged-in User Email:", loggedUserEmail);
+
+
+
 console.log("Logged-in User ID:", loggedInUserId);
 
 console.log("Selected User ID:", selectedUserId);
 
 console.log("Selected User Name:", selectedUserName);
+
+const  roomName=[loggedUserEmail,selectedUserEmail].sort();
+  const roomId=roomName.join("_");
+  console.log("Room ID:",roomId);
 // socket.io implementation
 const socket = io("http://localhost:3000",{
   auth:{
@@ -25,7 +37,8 @@ const socket = io("http://localhost:3000",{
 socket.on("connect", () => {
   console.log("connected to the server");
 
-  socket.emit("register",Number(loggedInUserId));
+  
+  socket.emit("join_room",roomId);
 });
 // receiving message from the server
 socket.on("message", (message) => {
@@ -213,6 +226,7 @@ form.addEventListener("submit", async function (event) {
      // ======================================
 
     socket.emit("message", {
+      roomId: roomId,
       senderId: Number(loggedInUserId),
 
       receiverId: Number(selectedUserId),
